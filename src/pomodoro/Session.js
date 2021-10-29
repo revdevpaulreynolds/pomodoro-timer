@@ -2,7 +2,12 @@ import React from "react";
 import { minutesToDuration, secondsToDuration } from "../utils/duration";
 
 export default function Session ({session, focusDuration, breakDuration, isTimerRunning}) {
-    
+    let timeProportion;
+    if(session) {
+        let duration = session.label === "Focusing" ? focusDuration : breakDuration;
+        timeProportion = 100 - Math.round((session.timeRemaining / (duration*60)*100));
+    }
+   
     
     if(!session) return null;
     return (
@@ -20,7 +25,7 @@ export default function Session ({session, focusDuration, breakDuration, isTimer
             </p>
           </div>
         </div>
-        {!isTimerRunning ? <p><h2>PAUSED</h2></p> : null}
+        {!isTimerRunning ? <h2>PAUSED</h2> : null}
         <div className="row mb-2">
           <div className="col">
             <div className="progress" style={{ height: "20px" }}>
@@ -29,8 +34,8 @@ export default function Session ({session, focusDuration, breakDuration, isTimer
                 role="progressbar"
                 aria-valuemin="0"
                 aria-valuemax="100"
-                aria-valuenow="0" // TODO: Increase aria-valuenow as elapsed time increases
-                style={{ width: "0%" }} // TODO: Increase width % as elapsed time increases
+                aria-valuenow={timeProportion} // TODO: Increase aria-valuenow as elapsed time increases
+                style={{ width: timeProportion + "%" }} // TODO: Increase width % as elapsed time increases
               />
             </div>
           </div>
