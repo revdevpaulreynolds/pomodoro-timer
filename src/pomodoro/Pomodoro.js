@@ -4,6 +4,7 @@ import useInterval from "../utils/useInterval";
 import {minutesToDuration} from "../utils/duration";
 import Session from "./Session.js"
 import SetTimerButtons from "./SetTimerButtons";
+import TimerControls from "./TimerControls";
 
 // These functions are defined outside of the component to insure they do not have access to state
 // and are, therefore more likely to be pure.
@@ -134,9 +135,19 @@ function Pomodoro() {
             </span>
             <div className="input-group-append">
               {/* TODO: Implement decreasing focus duration and disable during a focus or break session */}
-              <SetTimerButtons direction="decrease" mode="focus" handle={handleDecreaseFocus} session={session} />
+              <SetTimerButtons 
+                direction="decrease" 
+                mode="focus" 
+                handle={handleDecreaseFocus} 
+                session={session} 
+              />
               {/* TODO: Implement increasing focus duration  and disable during a focus or break session */}
-              <SetTimerButtons direction="increase" mode="focus" handle={handleIncreaseFocus} session={session} />
+              <SetTimerButtons 
+                direction="increase" 
+                mode="focus" 
+                handle={handleIncreaseFocus} 
+                session={session} 
+              />
             </div>
           </div>
         </div>
@@ -149,52 +160,37 @@ function Pomodoro() {
               </span>
               <div className="input-group-append">
                 {/* TODO: Implement decreasing break duration and disable during a focus or break session*/}
-                <SetTimerButtons direction="decrease" mode="break" handle={handleDecreaseBreak} session={session} />
+                <SetTimerButtons 
+                  direction="decrease" 
+                  mode="break" 
+                  handle={handleDecreaseBreak} 
+                  session={session} 
+                />
                 {/* TODO: Implement increasing break duration and disable during a focus or break session*/}
-                <SetTimerButtons direction="increase" mode="break" handle={handleIncreaseBreak} session={session} />
+                <SetTimerButtons 
+                  direction="increase" 
+                  mode="break" 
+                  handle={handleIncreaseBreak} 
+                  session={session} 
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="row">
-        <div className="col">
-          <div
-            className="btn-group btn-group-lg mb-2"
-            role="group"
-            aria-label="Timer controls"
-          >
-            <button
-              type="button"
-              className="btn btn-primary"
-              data-testid="play-pause"
-              title="Start or pause timer"
-              onClick={playPause}
-            >
-              <span
-                className={classNames({
-                  oi: true,
-                  "oi-media-play": !isTimerRunning,
-                  "oi-media-pause": isTimerRunning,
-                })}
-              />
-            </button>
-            {/* TODO: Implement stopping the current focus or break session. and disable the stop button when there is no active session */}
-            {/* TODO: Disable the stop button when there is no active session */}
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-testid="stop"
-              title="Stop the session"
-              disabled={!session? true : false}
-              onClick={handleStop}
-            >
-              <span className="oi oi-media-stop" />
-            </button>
-          </div>
-        </div>
-      </div>
-      <Session session={session} focusDuration={focusDuration} breakDuration={breakDuration} isTimerRunning={isTimerRunning}/>
+      <TimerControls 
+        playPause={playPause} 
+        session={session} 
+        handleStop={handleStop} 
+        isTimerRunning={isTimerRunning} 
+        classNames={classNames} 
+      />
+      <Session 
+        session={session} 
+        focusDuration={focusDuration} 
+        breakDuration={breakDuration} 
+        isTimerRunning={isTimerRunning}
+      />
     </div>
   );
 }

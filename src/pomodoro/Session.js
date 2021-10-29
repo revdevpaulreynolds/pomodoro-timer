@@ -5,7 +5,7 @@ export default function Session ({session, focusDuration, breakDuration, isTimer
     let timeProportion;
     if(session) {
         let duration = session.label === "Focusing" ? focusDuration : breakDuration;
-        timeProportion = 100 - Math.round((session.timeRemaining / (duration*60)*100));
+        timeProportion = 100 - ((session.timeRemaining / (duration*60)*100));
     }
    
     
